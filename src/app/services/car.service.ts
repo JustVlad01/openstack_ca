@@ -19,8 +19,18 @@ export class CarService {
 
   constructor(private http: HttpClient) {}
 
-  getCars(): Observable<Car[]> {
-    return this.http.get<Car[]>(this.apiUrl);
+  getCars(params: { sortBy?: string; order?: string } = {}): Observable<Car[]> {
+    let query = `${this.apiUrl}`;
+    const queryParams = [];
+
+    if (params.sortBy) queryParams.push(`sortBy=${params.sortBy}`);
+    if (params.order) queryParams.push(`order=${params.order}`);
+
+    if (queryParams.length) {
+      query += `?${queryParams.join('&')}`;
+    }
+
+    return this.http.get<Car[]>(query);
   }
 
   createCar(car: Car): Observable<Car> {

@@ -30,10 +30,21 @@ export class CarManagementComponent implements OnInit {
     this.loadCars();
   }
 
-  loadCars(): void {
-    this.carService.getCars().subscribe((cars: Car[]) => {
+  loadCars(params: { sortBy?: string; order?: string } = {}): void {
+    this.carService.getCars(params).subscribe((cars: Car[]) => {
       this.cars = cars;
     });
+  }
+
+  onSortChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+
+    if (value) {
+      const [field, order] = value.split('-');
+      this.loadCars({ sortBy: field, order });
+    } else {
+      this.loadCars(); // Reload without sorting if no value is selected
+    }
   }
 
   submitCar(): void {
