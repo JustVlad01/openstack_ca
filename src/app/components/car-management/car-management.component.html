@@ -2,8 +2,10 @@
   <h1>Car Inventory</h1>
   <div class="car-content">
     <!-- Form Section -->
+    
     <form [formGroup]="carForm" (ngSubmit)="submitCar()" class="car-form">
       <div class="form-group">
+        <h2> Enter Car Details </h2>
         <label for="brand">Brand</label>
         <input id="brand" type="text" formControlName="brand" />
         <span *ngIf="carForm.get('brand')?.invalid && carForm.get('brand')?.touched">

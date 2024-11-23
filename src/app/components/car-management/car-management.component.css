@@ -12,6 +12,13 @@ h1 {
   font-size: 50px;
   font-style: bold;
 }
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #850000;
+  font-size: 20px;
+  font-style: bold;
+}
 
 .car-container {
   display: flex;
