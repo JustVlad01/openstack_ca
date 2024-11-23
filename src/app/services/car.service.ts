@@ -14,7 +14,7 @@ export interface Car {
   providedIn: 'root',
 })
 export class CarService {
-  private apiUrl = 'http://localhost:3000/api/v1/cars'; // Express API URL
+  private apiUrl = 'http://localhost:3000/api/v1/cars'; // Adjust if needed
 
   constructor(private http: HttpClient) {}
 

@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [RouterModule],
+  template: `
+    <router-outlet></router-outlet>
+  `,
+  styles: [],
 })
 export class AppComponent {
-  title = 'car-management';
+  title = 'car-management'; // Add the title property
 }
