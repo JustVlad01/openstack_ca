@@ -22,6 +22,7 @@ export class CarManagementComponent implements OnInit {
       model: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       year: ['', [Validators.required, Validators.min(1870), Validators.max(new Date().getFullYear())]],
       mileage: ['', [Validators.required, Validators.min(0)]],
+      price: ['', [Validators.required, Validators.min(0)]],
     });
   }
 

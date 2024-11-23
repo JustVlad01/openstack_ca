@@ -8,6 +8,7 @@ export interface Car {
   model: string;
   year: number;
   mileage: number;
+  price: number;
 }
 
 @Injectable({

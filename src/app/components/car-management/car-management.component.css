@@ -43,6 +43,8 @@ h2 {
   background: #ffffff;
   padding: 20px;
   border-radius: 8px;
+  border-color: #850000;
+  border-width: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -53,7 +55,9 @@ h2 {
 .form-group label {
   display: block;
   margin-bottom: 5px;
+  border-color: #850000;
   font-weight: bold;
+  border-radius: 10px;
 }
 
 .form-group input {

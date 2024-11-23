@@ -36,6 +36,14 @@
           Mileage must be 0 or higher.
         </span>
       </div>
+     
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input id="price" type="number" formControlName="price" />
+        <span *ngIf="carForm.get('price')?.invalid && carForm.get('price')?.touched">
+          Mileage must be 0 or higher.
+        </span>
+      </div>
 
       <button type="submit">{{ editingCarId ? 'Update Car' : 'Add Car' }}</button>
       <button type="button" (click)="resetForm()">Clear</button>
@@ -49,7 +57,9 @@
           <th>Model</th>
           <th>Year</th>
           <th>Mileage</th>
+          <th>Price</th>
           <th>Actions</th>
+
         </tr>
       </thead>
       <tbody>
@@ -58,6 +68,7 @@
           <td>{{ car.model }}</td>
           <td>{{ car.year }}</td>
           <td>{{ car.mileage }}</td>
+          <td>{{ car.price }}</td>
           <td>
             <button (click)="editCar(car)">Edit</button>
             <button (click)="deleteCar(car._id || '')">Delete</button>
