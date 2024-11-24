@@ -13,8 +13,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class CarManagementComponent implements OnInit {
   cars: Car[] = [];
+  displayedCars: Car[] = [];
   carForm: FormGroup;
   editingCarId: string | null = null;
+
+  // Pagination properties
+  currentPage: number = 1;
+  carsPerPage: number = 7;
+
+  // Expose Math object for template //chatgpt suggestion
+  Math = Math;
 
   constructor(private fb: FormBuilder, private carService: CarService) {
     this.carForm = this.fb.group({
@@ -33,7 +41,14 @@ export class CarManagementComponent implements OnInit {
   loadCars(params: { sortBy?: string; order?: string } = {}): void {
     this.carService.getCars(params).subscribe((cars: Car[]) => {
       this.cars = cars;
+      this.updateDisplayedCars();
     });
+  }
+
+  updateDisplayedCars(): void {
+    const startIndex = (this.currentPage - 1) * this.carsPerPage;
+    const endIndex = startIndex + this.carsPerPage;
+    this.displayedCars = this.cars.slice(startIndex, endIndex);
   }
 
   onSortChange(event: Event): void {
@@ -43,7 +58,7 @@ export class CarManagementComponent implements OnInit {
       const [field, order] = value.split('-');
       this.loadCars({ sortBy: field, order });
     } else {
-      this.loadCars(); // Reload without sorting if no value is selected
+      this.loadCars();
     }
   }
 
@@ -70,11 +85,28 @@ export class CarManagementComponent implements OnInit {
   }
 
   deleteCar(id: string): void {
-    this.carService.deleteCar(id).subscribe(() => this.loadCars());
+    this.carService.deleteCar(id).subscribe(() => {
+      this.loadCars();
+    });
   }
 
   resetForm(): void {
     this.carForm.reset();
     this.editingCarId = null;
+  }
+
+  // Pagination 
+  nextPage(): void {
+    if (this.currentPage * this.carsPerPage < this.cars.length) {
+      this.currentPage++;
+      this.updateDisplayedCars();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedCars();
+    }
   }
 }

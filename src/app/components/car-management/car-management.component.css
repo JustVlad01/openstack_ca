@@ -166,3 +166,31 @@ button:hover {
     flex-direction: column; /* Stack everything vertically */
   }
 }
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.pagination-controls button {
+  padding: 5px 15px;
+  font-size: 14px;
+  background-color: #850000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 14px;
+  font-weight: bold;
+}

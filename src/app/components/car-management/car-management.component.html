@@ -2,24 +2,25 @@
   <!-- Page Title -->
   <header class="car-header">
     <h1>Car Management System</h1>
-    <p>Filter our cars to Find the one for You</p>
-   
+  
+    <p>Filter our cars to find the one for You</p>
+
     <!-- Sorting Section -->
-  <div class="car-form">
-    <h2>Sort By</h2>
-    <div class="form-group">
-      <label for="sort">Sort Criteria</label>
-      <select id="sort" (change)="onSortChange($event)">
-        <option value="">Select</option>
-        <option value="year-asc">Year (Lowest)</option>
-        <option value="year-desc">Year (Highest)</option>
-        <option value="mileage-asc">Mileage (Lowest)</option>
-        <option value="mileage-desc">Mileage (Highest)</option>
-        <option value="price-asc">Price (Lowest)</option>
-        <option value="price-desc">Price (Highest)</option>
-      </select>
+    <div class="car-form">
+      <h2>Sort By</h2>
+      <div class="form-group">
+        <label for="sort">Sort Criteria</label>
+        <select id="sort" (change)="onSortChange($event)">
+          <option value="">Select</option>
+          <option value="year-asc">Year (Lowest)</option>
+          <option value="year-desc">Year (Highest)</option>
+          <option value="mileage-asc">Mileage (Lowest)</option>
+          <option value="mileage-desc">Mileage (Highest)</option>
+          <option value="price-asc">Price (Lowest)</option>
+          <option value="price-desc">Price (Highest)</option>
+        </select>
+      </div>
     </div>
-  </div>
   </header>
 
   <!-- Form Section -->
@@ -67,8 +68,6 @@
     <button type="button" (click)="resetForm()">Clear</button>
   </form>
 
-  
-
   <!-- Table Section -->
   <div class="car-table-container">
     <table class="car-table">
@@ -83,7 +82,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let car of cars">
+        <tr *ngFor="let car of displayedCars">
           <td>{{ car.brand }}</td>
           <td>{{ car.model }}</td>
           <td>{{ car.year }}</td>
@@ -96,4 +95,12 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-controls">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }} of {{ Math.ceil(cars.length / carsPerPage) }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage * carsPerPage >= cars.length">Next</button>
+    </div>
   </div>
+</div>
