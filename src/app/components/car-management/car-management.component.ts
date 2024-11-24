@@ -21,8 +21,11 @@ export class CarManagementComponent implements OnInit {
   currentPage: number = 1;
   carsPerPage: number = 7;
 
-  // Expose Math object for template //chatgpt suggestion
+  // Expose Math object for template
   Math = Math;
+
+  // Search property
+  searchQuery: string = '';
 
   constructor(private fb: FormBuilder, private carService: CarService) {
     this.carForm = this.fb.group({
@@ -41,14 +44,18 @@ export class CarManagementComponent implements OnInit {
   loadCars(params: { sortBy?: string; order?: string } = {}): void {
     this.carService.getCars(params).subscribe((cars: Car[]) => {
       this.cars = cars;
-      this.updateDisplayedCars();
+      this.filterAndPaginateCars();
     });
   }
 
-  updateDisplayedCars(): void {
+  filterAndPaginateCars(): void {
+    const filteredCars = this.cars.filter(car =>
+      car.brand.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      car.model.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
     const startIndex = (this.currentPage - 1) * this.carsPerPage;
     const endIndex = startIndex + this.carsPerPage;
-    this.displayedCars = this.cars.slice(startIndex, endIndex);
+    this.displayedCars = filteredCars.slice(startIndex, endIndex);
   }
 
   onSortChange(event: Event): void {
@@ -60,6 +67,12 @@ export class CarManagementComponent implements OnInit {
     } else {
       this.loadCars();
     }
+  }
+
+  onSearchChange(event: Event): void {
+    this.searchQuery = (event.target as HTMLInputElement).value;
+    this.currentPage = 1; // Reset to the first page
+    this.filterAndPaginateCars();
   }
 
   submitCar(): void {
@@ -95,18 +108,18 @@ export class CarManagementComponent implements OnInit {
     this.editingCarId = null;
   }
 
-  // Pagination 
+  // Pagination methods
   nextPage(): void {
     if (this.currentPage * this.carsPerPage < this.cars.length) {
       this.currentPage++;
-      this.updateDisplayedCars();
+      this.filterAndPaginateCars();
     }
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.updateDisplayedCars();
+      this.filterAndPaginateCars();
     }
   }
 }

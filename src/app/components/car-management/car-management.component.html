@@ -3,9 +3,8 @@
   <header class="car-header">
     <h1>Car Management System</h1>
   
-    <p>Filter our cars to find the one for You</p>
 
-    <!-- Sorting Section -->
+    <!-- Sorting and Search Section -->
     <div class="car-form">
       <h2>Sort By</h2>
       <div class="form-group">
@@ -19,6 +18,17 @@
           <option value="price-asc">Price (Lowest)</option>
           <option value="price-desc">Price (Highest)</option>
         </select>
+      </div>
+
+      <h2>Search</h2>
+      <div class="form-group">
+        <label for="search">Search by Brand or Model</label>
+        <input
+          id="search"
+          type="text"
+          placeholder="Enter car brand or model"
+          (input)="onSearchChange($event)"
+        />
       </div>
     </div>
   </header>
