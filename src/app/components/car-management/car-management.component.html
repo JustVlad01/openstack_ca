@@ -1,70 +1,76 @@
-
 <div class="car-container">
-  <h1>Car Inventory</h1>
-  <div class="car-content">
-    <!-- Form Section -->
-    <form [formGroup]="carForm" (ngSubmit)="submitCar()" class="car-form">
-      <div class="form-group">
-        <h2>Enter Car Details</h2>
-        <label for="brand">Brand</label>
-        <input id="brand" type="text" formControlName="brand" />
-        <span *ngIf="carForm.get('brand')?.invalid && carForm.get('brand')?.touched">
-          Brand is required (2–30 characters).
-        </span>
-      </div>
-      <div class="form-group">
-        <label for="model">Model</label>
-        <input id="model" type="text" formControlName="model" />
-        <span *ngIf="carForm.get('model')?.invalid && carForm.get('model')?.touched">
-          Model is required (2–30 characters).
-        </span>
-      </div>
-      <div class="form-group">
-        <label for="year">Year</label>
-        <input id="year" type="number" formControlName="year" />
-        <span *ngIf="carForm.get('year')?.invalid && carForm.get('year')?.touched">
-          Year must be between 1870 and the current year.
-        </span>
-      </div>
-      <div class="form-group">
-        <label for="mileage">Mileage</label>
-        <input id="mileage" type="number" formControlName="mileage" />
-        <span *ngIf="carForm.get('mileage')?.invalid && carForm.get('mileage')?.touched">
-          Mileage must be 0 or higher.
-        </span>
-      </div>
-      <div class="form-group">
-        <label for="price">Price</label>
-        <div style="display: flex; align-items: center;">
-          <span style="margin-right: 5px;">€</span>
-          <input id="price" type="number" formControlName="price" />
-        </div>
-        <span *ngIf="carForm.get('price')?.invalid && carForm.get('price')?.touched">
-          Price must be 0 or higher.
-        </span>
-      </div>
-      <button type="submit">{{ editingCarId ? 'Update Car' : 'Add Car' }}</button>
-      <button type="button" (click)="resetForm()">Clear</button>
-    </form>
-
+  <!-- Page Title -->
+  <header class="car-header">
+    <h1>Car Management System</h1>
+    <p>Filter our cars to Find the one for You</p>
+   
     <!-- Sorting Section -->
-    <div class="car-form">
-      <h2>Sort By</h2>
-      <div class="form-group">
-        <label for="sort">Sort Criteria</label>
-        <select id="sort" (change)="onSortChange($event)">
-          <option value="">Select</option>
-          <option value="year-asc">Year (Lowest)</option>
-          <option value="year-desc">Year (Highest)</option>
-          <option value="mileage-asc">Mileage (Lowest)</option>
-          <option value="mileage-desc">Mileage (Highest)</option>
-          <option value="price-asc">Price (Lowest)</option>
-          <option value="price-desc">Price (Highest)</option>
-        </select>
-      </div>
+  <div class="car-form">
+    <h2>Sort By</h2>
+    <div class="form-group">
+      <label for="sort">Sort Criteria</label>
+      <select id="sort" (change)="onSortChange($event)">
+        <option value="">Select</option>
+        <option value="year-asc">Year (Lowest)</option>
+        <option value="year-desc">Year (Highest)</option>
+        <option value="mileage-asc">Mileage (Lowest)</option>
+        <option value="mileage-desc">Mileage (Highest)</option>
+        <option value="price-asc">Price (Lowest)</option>
+        <option value="price-desc">Price (Highest)</option>
+      </select>
     </div>
+  </div>
+  </header>
 
-    <!-- Table Section -->
+  <!-- Form Section -->
+  <form [formGroup]="carForm" (ngSubmit)="submitCar()" class="car-form">
+    <h2>Enter Car Details</h2>
+    <div class="form-group">
+      <label for="brand">Brand</label>
+      <input id="brand" type="text" formControlName="brand" />
+      <span *ngIf="carForm.get('brand')?.invalid && carForm.get('brand')?.touched">
+        Brand is required (2–30 characters).
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="model">Model</label>
+      <input id="model" type="text" formControlName="model" />
+      <span *ngIf="carForm.get('model')?.invalid && carForm.get('model')?.touched">
+        Model is required (2–30 characters).
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="year">Year</label>
+      <input id="year" type="number" formControlName="year" />
+      <span *ngIf="carForm.get('year')?.invalid && carForm.get('year')?.touched">
+        Year must be between 1870 and the current year.
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="mileage">Mileage</label>
+      <input id="mileage" type="number" formControlName="mileage" />
+      <span *ngIf="carForm.get('mileage')?.invalid && carForm.get('mileage')?.touched">
+        Mileage must be 0 or higher.
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <div>
+        <span>€</span>
+        <input id="price" type="number" formControlName="price" />
+      </div>
+      <span *ngIf="carForm.get('price')?.invalid && carForm.get('price')?.touched">
+        Price must be 0 or higher.
+      </span>
+    </div>
+    <button type="submit">{{ editingCarId ? 'Update Car' : 'Add Car' }}</button>
+    <button type="button" (click)="resetForm()">Clear</button>
+  </form>
+
+  
+
+  <!-- Table Section -->
+  <div class="car-table-container">
     <table class="car-table">
       <thead>
         <tr>
@@ -91,5 +97,3 @@
       </tbody>
     </table>
   </div>
-</div>
-
