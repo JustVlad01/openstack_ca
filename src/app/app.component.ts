@@ -11,5 +11,5 @@ import { RouterModule } from '@angular/router';
   styles: [],
 })
 export class AppComponent {
-  title = 'car-management'; // Add the title property
+  title = 'car-management'; 
 }
