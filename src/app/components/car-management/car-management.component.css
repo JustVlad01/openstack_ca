@@ -1,198 +1,31 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  
+/* Override any custom styles as needed */
+h1 {
+  font-size: 40px; /* You can adjust this based on your design */
 }
 
-h1, h2, p {
-  margin: 0;
-}
-
-/* Header Styling */
-.car-header {
-  text-align: center;
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #850000;
-  color: white;
-  border-radius: 8px;
-}
-
-.car-header h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.car-header p {
-  font-size: 16px;
-  margin: 0;
-}
-
-/* Main Container */
-.car-container {
-  display: grid;
-  gap: 20px;
-  padding: 20px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-/* Form and Sorting */
-.car-form {
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  width: 95%;
-}
-
-.car-form h2 {
+h2 {
   font-size: 18px;
-  color: #850000;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.form-group input,
-.car-form select {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-/* Button Styling */
-button {
-  padding: 10px;
+.table-danger {
   background-color: #850000;
   color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  margin-top: 10px;
 }
 
-button:hover {
+.btn-danger {
+  background-color: #850000;
+  border-color: #850000;
+}
+
+.btn-danger:hover {
   background-color: #670000;
 }
 
-/* Table Styling */
-.car-table-container {
-  overflow-x: auto;
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
 }
 
-.car-table {
-  width: 100%;
-  max-width: 1000px; /* Increased max-width */
-  border-collapse: collapse;
-  background: #ffffff;
-  table-layout: fixed; /* Ensure consistent column widths */
-}
-
-.car-table th,
-.car-table td {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #ddd;
-  padding: 10px 15px;
-  text-align: left;
-  word-wrap: break-word; /* Allow text to wrap */
-}
-
-.car-table th {
-  background-color: #850000;
-  color: white;
-}
-
-.car-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.car-table td button {
-  padding: 5px 10px;
-  font-size: 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.car-table td button:first-child {
-  background-color: #850000;
-  color: white;
-}
-
-.car-table td button:last-child {
-  background-color: #dc3545;
-  color: white;
-}
-
-/* Footer Styling */
-.car-footer {
-  text-align: center;
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #850000;
-  color: white;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-/* Responsive Design */
-@media (min-width: 768px) {
-  .car-container {
-    grid-template-columns: 1fr 1fr; /* Form and Sort By side by side */
-  }
-
-  .car-table-container {
-    grid-column: span 2; /* Make table stretch across the entire row */
-  }
-}
-
-@media (max-width: 767px) {
-  .car-container {
-    display: flex;
-    flex-direction: column; /* Stack everything vertically */
-  }
-}
-
-.pagination-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  gap: 10px;
-}
-
-.pagination-controls button {
-  padding: 5px 15px;
-  font-size: 14px;
-  background-color: #850000;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.pagination-controls button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.pagination-controls span {
-  font-size: 14px;
-  font-weight: bold;
+.btn-secondary:hover {
+  background-color: #5a6268;
 }
