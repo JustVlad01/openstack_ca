@@ -1,4 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
 
+.admin-actions {
+    display: none;
+  }
+  
+  .admin .admin-actions {
+    display: block;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  }
+  
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,32 @@
+/* Basic styling enhancements for Bootstrap */
+body {
+  background-color: #f8f9fa;
+}
+
+.login-container {
+  margin-top: 200px;
+  max-width: 700px; 
+}
+
+.card {
+  border: 5px;
+  box-shadow: 0 0.5rem 5rem rgba(133, 24, 24, 0.15); 
+}
+
+.card-header {
+  background-color: #28a745;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  padding: 2rem;
+}
+
+.btn-login {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-login:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}

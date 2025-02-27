@@ -1,0 +1,29 @@
+<div class="container login-container">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="mb-0">Login</h4>
+    </div>
+    <div class="card-body p-4">
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+      
+      <form (submit)="login()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" required>
+        </div>
+        
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-login w-100" [disabled]="isLoading">
+          <span *ngIf="isLoading">Loading...</span>
+          <span *ngIf="!isLoading">Login</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,104 +1,298 @@
-<div class="container py-5">
-  <h1 class="text-center text-danger mb-4">Car Inventory</h1>
-  <div class="row">
-    <!-- Form Section -->
-    <div class="col-md-6">
-      <form [formGroup]="carForm" (ngSubmit)="submitCar()" class="border p-4 rounded shadow-sm bg-light">
-        <h2 class="text-center text-danger mb-4">Enter Car Details</h2>
-
-        <div class="mb-3">
-          <label for="brand" class="form-label">Brand</label>
-          <input id="brand" type="text" formControlName="brand" class="form-control" />
-          <div *ngIf="carForm.get('brand')?.invalid && carForm.get('brand')?.touched" class="text-danger">
-            Brand is required (2–30 characters).
-          </div>
+<div class="dashboard-container">
+  <!-- Top Navigation Bar -->
+  <div class="top-navbar">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h1 class="brand-title">Car Management Warehouse</h1>
         </div>
-
-        <div class="mb-3">
-          <label for="model" class="form-label">Model</label>
-          <input id="model" type="text" formControlName="model" class="form-control" />
-          <div *ngIf="carForm.get('model')?.invalid && carForm.get('model')?.touched" class="text-danger">
-            Model is required (2–30 characters).
+        <div class="col-md-6 text-end">
+          <!-- Login Status Section -->
+          <div class="user-status" *ngIf="isUser() || isAdmin()">
+            <span class="user-badge" [ngClass]="{'user-badge-user': isUser(), 'user-badge-admin': isAdmin()}">
+              {{ isAdmin() ? 'Administrator' : 'User' }}
+            </span>
+            <div class="user-permissions">
+              <ng-container *ngIf="isAdmin()">
+                <span>Full access</span>
+              </ng-container>
+              <ng-container *ngIf="isUser()">
+                <span>Limited access</span>
+              </ng-container>
+            </div>
           </div>
-        </div>
-
-        <div class="mb-3">
-          <label for="year" class="form-label">Year</label>
-          <input id="year" type="number" formControlName="year" class="form-control" />
-          <div *ngIf="carForm.get('year')?.invalid && carForm.get('year')?.touched" class="text-danger">
-            Year must be between 1870 and the current year.
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label for="mileage" class="form-label">Mileage</label>
-          <input id="mileage" type="number" formControlName="mileage" class="form-control" />
-          <div *ngIf="carForm.get('mileage')?.invalid && carForm.get('mileage')?.touched" class="text-danger">
-            Mileage must be 0 or higher.
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label for="price" class="form-label">Price (€)</label>
-          <input id="price" type="number" formControlName="price" class="form-control" />
-          <div *ngIf="carForm.get('price')?.invalid && carForm.get('price')?.touched" class="text-danger">
-            Price must be 0 or higher.
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-danger w-100 mb-2">
-          {{ editingCarId ? 'Update Car' : 'Add Car' }}
-        </button>
-        <button type="button" class="btn btn-secondary w-100" (click)="resetForm()">Clear</button>
-      </form>
-    </div>
-
-    <!-- Sorting Section -->
-    <div class="col-md-6">
-      <div class="border p-4 rounded shadow-sm bg-light">
-        <h2 class="text-center text-danger mb-4">Sort By</h2>
-        <div class="mb-3">
-          <label for="sort" class="form-label">Sort Criteria</label>
-          <select id="sort" class="form-select" (change)="onSortChange($event)">
-            <option value="">Select</option>
-            <option value="year-asc">Year (Lowest)</option>
-            <option value="year-desc">Year (Highest)</option>
-            <option value="mileage-asc">Mileage (Lowest)</option>
-            <option value="mileage-desc">Mileage (Highest)</option>
-            <option value="price-asc">Price (Lowest)</option>
-            <option value="price-desc">Price (Highest)</option>
-          </select>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Table Section -->
-  <div class="mt-5">
-    <table class="table table-bordered table-striped">
-      <thead class="table-danger">
-        <tr>
-          <th>Brand</th>
-          <th>Model</th>
-          <th>Year</th>
-          <th>Mileage</th>
-          <th>Price</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let car of cars">
-          <td>{{ car.brand }}</td>
-          <td>{{ car.model }}</td>
-          <td>{{ car.year }}</td>
-          <td>{{ car.mileage }}</td>
-          <td>{{ car.price | currency: 'EUR':'symbol':'1.2-2' }}</td>
-          <td>
-            <button class="btn btn-primary btn-sm" (click)="editCar(car)">Edit</button>
-            <button class="btn btn-danger btn-sm" (click)="deleteCar(car._id || '')">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="container main-content">
+    <!-- Sidebar -->
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="sidebar">
+          <!-- Form Section -->
+          <div class="sidebar-section">
+            <div class="sidebar-header">
+              <h2>Add New Car</h2>
+            </div>
+            <div class="sidebar-body">
+              <form [formGroup]="carForm" (ngSubmit)="submitCar()">
+                <div class="form-group">
+                  <label for="brand">Brand</label>
+                  <input id="brand" type="text" formControlName="brand" class="form-control" />
+                  <div *ngIf="carForm.get('brand')?.invalid && carForm.get('brand')?.touched" class="form-error">
+                    Brand is required (2–30 characters).
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="model">Model</label>
+                  <input id="model" type="text" formControlName="model" class="form-control" />
+                  <div *ngIf="carForm.get('model')?.invalid && carForm.get('model')?.touched" class="form-error">
+                    Model is required (2–30 characters).
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="year">Year</label>
+                      <input id="year" type="number" formControlName="year" class="form-control" />
+                      <div *ngIf="carForm.get('year')?.invalid && carForm.get('year')?.touched" class="form-error">
+                        Valid year required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="mileage">Mileage</label>
+                      <input id="mileage" type="number" formControlName="mileage" class="form-control" />
+                      <div *ngIf="carForm.get('mileage')?.invalid && carForm.get('mileage')?.touched" class="form-error">
+                        Valid mileage required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="price">Price (€)</label>
+                  <input id="price" type="number" formControlName="price" class="form-control" />
+                  <div *ngIf="carForm.get('price')?.invalid && carForm.get('price')?.touched" class="form-error">
+                    Valid price required.
+                  </div>
+                </div>
+
+                <!-- Image Upload Section -->
+                <div class="form-group">
+                  <label for="carImage">Car Image</label>
+                  <div class="custom-file-upload">
+                    <input 
+                      #fileInput
+                      type="file" 
+                      id="carImage" 
+                      class="form-control" 
+                      accept="image/*" 
+                      (change)="onFileSelected($event)"
+                    />
+                    <small>Upload an image (max 5MB).</small>
+                  </div>
+                  
+                  <!-- Image Preview -->
+                  <div *ngIf="imagePreview" class="image-preview">
+                    <div class="preview-container">
+                      <img [src]="imagePreview" alt="Car preview">
+                      <button 
+                        type="button" 
+                        class="remove-image-btn" 
+                        (click)="removeSelectedImage()"
+                        title="Remove image"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn-primary" [disabled]="editingCarId && !isAdmin()">
+                    {{ editingCarId ? 'Update Car' : 'Add Car' }}
+                  </button>
+                  <button type="button" class="btn-secondary" (click)="resetForm()">Clear</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Filters Section -->
+          <div class="sidebar-section">
+            <div class="sidebar-header">
+              <h2>Filters</h2>
+            </div>
+            <div class="sidebar-body">
+              <!-- Search Box -->
+              <div class="form-group">
+                <label for="search">Search Cars</label>
+                <div class="search-box">
+                  <input 
+                    id="search" 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Search by brand or model" 
+                    (input)="onSearchChange($event)"
+                  />
+                  <span class="search-icon">🔍</span>
+                </div>
+              </div>
+              
+              <!-- Sort Options -->
+              <div class="form-group">
+                <label for="sort">Sort By</label>
+                <select id="sort" class="form-select" (change)="onSortChange($event)">
+                  <option value="">Default</option>
+                  <option value="year-asc">Year (Lowest)</option>
+                  <option value="year-desc">Year (Highest)</option>
+                  <option value="mileage-asc">Mileage (Lowest)</option>
+                  <option value="mileage-desc">Mileage (Highest)</option>
+                  <option value="price-asc">Price (Lowest)</option>
+                  <option value="price-desc">Price (Highest)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="col-lg-9">
+        <div class="content-area">
+          <!-- Category Tabs -->
+          <div class="category-tabs">
+            <ul class="nav-tabs">
+              <li class="tab-item">
+                <a class="tab-link" [class.active]="selectedCategory === 'all'" (click)="onCategoryChange('all')">
+                  All Cars
+                </a>
+              </li>
+              <li class="tab-item" *ngFor="let category of categories">
+                <a class="tab-link" [class.active]="selectedCategory === category" (click)="onCategoryChange(category)">
+                  {{ category }}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Car Display Section -->
+          <div class="car-display">
+            <!-- When a specific category is selected -->
+            <div *ngIf="selectedCategory !== 'all'" class="category-section" @fadeIn>
+              <h2 class="category-title">{{ selectedCategory }} Models</h2>
+              
+              <div class="car-grid">
+                <div class="car-item" *ngFor="let car of displayedCars">
+                  <div class="car-card">
+                    <div class="car-image">
+                      <img 
+                        *ngIf="car.imageUrl" 
+                        [src]="car.imageUrl" 
+                        alt="{{ car.brand }} {{ car.model }}"
+                        (error)="handleImageError(car)"
+                      >
+                      <div *ngIf="!car.imageUrl" class="no-image">
+                        <span>No Image Available</span>
+                      </div>
+                    </div>
+                    <div class="car-info">
+                      <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
+                      <div class="car-details">
+                        <div class="detail-item">
+                          <span class="detail-label">Year</span>
+                          <span class="detail-value">{{ car.year }}</span>
+                        </div>
+                        <div class="detail-item">
+                          <span class="detail-label">Mileage</span>
+                          <span class="detail-value">{{ car.mileage }}</span>
+                        </div>
+                        <div class="detail-item price">
+                          <span class="detail-label">Price</span>
+                          <span class="detail-value">{{ car.price | currency: 'EUR':'symbol':'1.2-2' }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="car-actions">
+                      <button *ngIf="isAdmin()" class="btn-edit" (click)="editCar(car)">Edit</button>
+                      <button *ngIf="isAdmin()" class="btn-delete" (click)="deleteCar(car._id || '')">Delete</button>
+                      <span *ngIf="!isAdmin()" class="view-only">View only</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- When "All Cars" is selected -->
+            <div *ngIf="selectedCategory === 'all'" @fadeIn>
+              <div *ngFor="let category of categories" class="category-section">
+                <h2 class="category-title">{{ category }}</h2>
+                
+                <div class="car-grid">
+                  <div class="car-item" *ngFor="let car of categorizedCars[category]">
+                    <div class="car-card">
+                      <div class="car-image">
+                        <img 
+                          *ngIf="car.imageUrl" 
+                          [src]="car.imageUrl" 
+                          alt="{{ car.brand }} {{ car.model }}"
+                          (error)="handleImageError(car)"
+                        >
+                        <div *ngIf="!car.imageUrl" class="no-image">
+                          <span>No Image Available</span>
+                        </div>
+                      </div>
+                      <div class="car-info">
+                        <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
+                        <div class="car-details">
+                          <div class="detail-item">
+                            <span class="detail-label">Year</span>
+                            <span class="detail-value">{{ car.year }}</span>
+                          </div>
+                          <div class="detail-item">
+                            <span class="detail-label">Mileage</span>
+                            <span class="detail-value">{{ car.mileage }}</span>
+                          </div>
+                          <div class="detail-item price">
+                            <span class="detail-label">Price</span>
+                            <span class="detail-value">{{ car.price | currency: 'EUR':'symbol':'1.2-2' }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="car-actions">
+                        <button *ngIf="isAdmin()" class="btn-edit" (click)="editCar(car)">Edit</button>
+                        <button *ngIf="isAdmin()" class="btn-delete" (click)="deleteCar(car._id || '')">Delete</button>
+                        <span *ngIf="!isAdmin()" class="view-only">View only</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination Controls -->
+          <div class="pagination-controls">
+            <div class="pagination-info">
+              <span>Showing {{ (currentPage - 1) * carsPerPage + 1 }} to {{ Math.min(currentPage * carsPerPage, cars.length) }} of {{ cars.length }} cars</span>
+            </div>
+            <div class="pagination-buttons">
+              <button class="btn-page" [disabled]="currentPage === 1" (click)="previousPage()">
+                Previous
+              </button>
+              <button class="btn-page" [disabled]="currentPage * carsPerPage >= cars.length" (click)="nextPage()">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
