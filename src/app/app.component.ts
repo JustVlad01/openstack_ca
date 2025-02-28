@@ -146,7 +146,7 @@ export class AppComponent {
   constructor(private authService: AuthService, private router: Router) {}
   
   isLoggedIn(): boolean {
-    return !!this.authService.getToken();
+    return this.authService.isLoggedIn();
   }
   
   isAdmin(): boolean {

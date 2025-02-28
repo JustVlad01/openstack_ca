@@ -19,11 +19,29 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('token');
+    }
+    return null;
+  }
+  
+  setToken(token: string): void {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', token);
+    }
+  }
+
+  isLoggedIn(): boolean {
+    if (typeof window !== 'undefined') {
+      return !!this.getToken();
+    }
+    return false;
   }
 
   getUserRole(): string | null {
