@@ -1,30 +1,4 @@
 <div class="dashboard-container">
-  <!-- Top Navigation Bar -->
-  <div class="top-navbar">
-    <div class="container-fluid">
-      <div class="row align-items-center">
-        <div class="col-md-6">
-          <h1 class="brand-title">Car Management Warehouse</h1>
-        </div>
-        <div class="col-md-6 text-end">
-          <!-- Login Status Section -->
-          <div class="user-status" *ngIf="isUser() || isAdmin()">
-            <span class="user-badge" [ngClass]="{'user-badge-user': isUser(), 'user-badge-admin': isAdmin()}">
-              {{ isAdmin() ? 'Administrator' : 'User' }}
-            </span>
-            <div class="user-permissions">
-              <ng-container *ngIf="isAdmin()">
-                <span>Full access</span>
-              </ng-container>
-              <ng-container *ngIf="isUser()">
-                <span>Limited access</span>
-              </ng-container>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="container main-content">
     <!-- Sidebar -->
